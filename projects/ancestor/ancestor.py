@@ -2,23 +2,28 @@
 def earliest_ancestor(ancestors, starting_node):
     stack = []
     visited = set()
-    stack.append([starting_node])  # [ [2] ]
+    stack.append([starting_node])  
     maxList = []
+
     while len(stack) > 0:
-        path = stack.pop()  # [2]
-        v = path[-1]  # 2
+        path = stack.pop()  
+        v = path[-1]  
+
         if v not in visited:
-            visited.add(v)  # { 2 }
+            visited.add(v) 
+            
             for neighbors in ancestors:
-                if v == neighbors[-1]:  # 2 != neighbors.. False
+                if v == neighbors[-1]: 
+                    # update max if longer
                     current = [*path, neighbors[0]]
                     if len(current) > len(maxList):
                         maxList = [*current]
+                    # get smaller number if equal
                     if len(current) == len(maxList):
                         if current[-1] < maxList[-1]:
                             maxList = [*current]
                     stack.append(current)
-    # since line 13 is False, maxList never gets updated since it doesnt have a parent.
+                    
     if len(maxList) == 0:
         return -1
     return maxList[-1]
